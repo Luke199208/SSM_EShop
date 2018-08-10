@@ -151,7 +151,7 @@ public class ItemServiceImpl implements ItemService {
 
         PageHelper.startPage(Integer.valueOf(page), Integer.valueOf(rows));
         TbItemParamExample itemParamExample = new TbItemParamExample();
-        List<TbItemParam> itemParams = itemParamMapper.selectByExample(itemParamExample);
+        List<TbItemParam> itemParams = itemParamMapper.selectByExampleWithBLOBs(itemParamExample);
 
         PageInfo<TbItemParam> pageInfo = new PageInfo<>(itemParams);
         Map map = new HashMap();
