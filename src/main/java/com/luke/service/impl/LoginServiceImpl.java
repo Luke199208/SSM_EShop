@@ -4,6 +4,10 @@ import com.luke.bean.Admin;
 import com.luke.bean.AdminExample;
 import com.luke.mapper.AdminMapper;
 import com.luke.service.LoginService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -43,6 +47,19 @@ public class LoginServiceImpl implements LoginService {
         criteria.andCodeEqualTo((String) map.get("code"));
         criteria.andPasswordEqualTo((String) map.get("password"));
         List<Admin> adminList = mapper.selectByExample(adminExample);
+
         return adminList.size()>0;
+    }
+
+    @Override
+    public boolean findAdminByCode(Map map) {
+
+        AdminExample adminExample = new AdminExample();
+        AdminExample.Criteria criteria =adminExample.createCriteria();
+        criteria.andCodeEqualTo((String) map.get("code"));
+        List<Admin> adminList = mapper.selectByExample(adminExample);
+
+        return adminList.size()>0;
+
     }
 }

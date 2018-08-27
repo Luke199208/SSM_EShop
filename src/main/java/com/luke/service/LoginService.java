@@ -25,4 +25,6 @@ import java.util.Map;
 public interface LoginService {
 
     boolean findAdminByCodePasswd(Map map);
+
+    boolean findAdminByCode(Map map);
 }

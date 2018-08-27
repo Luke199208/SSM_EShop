@@ -3,6 +3,20 @@ package com.luke.bean;
 import java.util.Date;
 
 public class Admin {
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "adminId=" + adminId +
+                ", code='" + code + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", email='" + email + '\'' +
+                ", enrolldate=" + enrolldate +
+                '}';
+    }
+
     private Integer adminId;
 
     private String code;

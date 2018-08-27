@@ -17,27 +17,33 @@
 		padding: 10px 10px 10px 10px;
 	}
 </style>
-
-
 </head>
 <body class="easyui-layout">
     <div data-options="region:'west',title:'菜单',split:true" style="width:180px;">
     	<ul id="menu" class="easyui-tree" style="margin-top: 10px;margin-left: 5px;">
-         	<li>
+         	<li id="commodityManagement" style="display: none" >
          		<span>商品管理</span>
          		<ul>
-	         		<li data-options="attributes:{'url':'item-add.html'}">新增商品</li>
-	         		<li data-options="attributes:{'url':'item-list.html'}">查询商品</li>
-	         		<li data-options="attributes:{'url':'item-param-list.html'}">规格参数</li>
+	         		<li id="item-add"  data-options="attributes:{'url':'item-add.html'}">新增商品</li>
+	         		<li id="item-list"  data-options="attributes:{'url':'item-list.html'}">查询商品</li>
+	         		<li id="item-param-list" data-options="attributes:{'url':'item-param-list.html'}">规格参数</li>
 	         	</ul>
          	</li>
-         	<li>
+         	<li id="contentManagement" >
          		<span>网站内容管理</span>
          		<ul>
-	         		<li data-options="attributes:{'url':'content-category.html'}">内容分类管理</li>
-	         		<li data-options="attributes:{'url':'content.html'}">内容管理</li>
+	         		<li id="content-category" data-options="attributes:{'url':'content-category.html'}">内容分类管理</li>
+	         		<li id="content" data-options="attributes:{'url':'content.html'}">内容管理</li>
 	         	</ul>
          	</li>
+			<li id="authorityManagement" >
+				<span>权限管理</span>
+				<ul>
+					<li id="authority_query" data-options="attributes:{'url':'authority_query.html'}">查看权限</li>
+					<li id="authority_add" data-options="attributes:{'url':'authority_add.html'}">增加权限</li>
+					<li id="authority_del"  data-options="attributes:{'url':'authority_del.html'}">删除</li>
+				</ul>
+			</li>
          </ul>
     </div>
     <div data-options="region:'center',title:''">
@@ -68,7 +74,71 @@ $(function(){
 			}
 		}
 	});
+
+	//$("#commodityManagement").css("display","none");
+	//$("#commodityManagement").hide();
+	//document.getElementById("commodityManagement").style.display="none";
+	//judgeAuthority();
+	//judgePermission();
 });
+	function judgeAuthority() {
+		$.ajax({
+			type: "post",
+			url: "login/queryAuth.do",
+			contentType: 'application/json;charset=utf-8',
+			success: function (data) {
+				for(var i=0;i<data.length;i++){
+					if(data[i]=="commodityManagement"){
+						document.getElementById("commodityManagement").style.display="";
+					}
+					if(data[i]=="contentManagement"){
+						document.getElementById("contentManagement").style.display="";
+					}
+					if(data[i]=="authorityManagement"){
+						document.getElementById("authorityManagement").style.display="";
+					}
+				}
+			}
+		});
+	}
+
+	function judgePermission() {
+		$.ajax({
+			type: "post",
+			url: "login/queryPermission.do",
+			contentType: 'application/json;charset=utf-8',
+			success: function (data) {
+				for(var i=0;i<data.length;i++){
+					if(data[i]=="commodityManagement:add"){
+						document.getElementById("item-add").style.display="";
+					}
+					if(data[i]=="commodityManagement:query"){
+						document.getElementById("item-list").style.display="";
+					}
+					if(data[i]=="commodityManagement:param"){
+						document.getElementById("item-param-list").style.display="";
+					}
+
+					if(data[i]=="contentManagement:category"){
+						document.getElementById("content-category").style.display="";
+					}
+					if(data[i]=="contentManagement:content"){
+						document.getElementById("content").style.display="";
+					}
+
+					if(data[i]=="authorityManagement:add"){
+						document.getElementById("authority_add").style.display="";
+					}
+					if(data[i]=="authorityManagement:query"){
+						document.getElementById("authority_query").style.display="";
+					}
+					if(data[i]=="authorityManagement:del"){
+						document.getElementById("authority_del").style.display="";
+					}
+				}
+			}
+		});
+	}
 </script>
 </body>
 </html>
